@@ -1,0 +1,29 @@
+Resources:
+  SECURITYAEV:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Allow ssh to client host
+      VpcId: vpc-0067b3e50d67e92ca
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 0
+          ToPort: 65535
+          CidrIp: 0.0.0.0/0
+  INSTANCEAEV:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: ami-0beaa649c482330f7
+      KeyName: suriya_one
+      BlockDeviceMappings: 
+      - DeviceName: /dev/xvda
+        Ebs: 
+          VolumeType: gp2
+          VolumeSize: 8
+      InstanceType: t2.micro
+      SecurityGroupIds:
+        - Ref: SECURITYAEV
